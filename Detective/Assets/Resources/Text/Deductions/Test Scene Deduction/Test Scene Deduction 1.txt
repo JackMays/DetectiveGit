@@ -1,0 +1,4 @@
+FamilyKill
+Knife
+Patio
+Family killed by Knife

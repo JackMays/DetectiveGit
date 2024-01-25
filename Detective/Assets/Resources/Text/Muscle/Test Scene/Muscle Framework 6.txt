@@ -1,0 +1,5 @@
+MuscMurderer0
+Punch
+init
+chain test init
+false

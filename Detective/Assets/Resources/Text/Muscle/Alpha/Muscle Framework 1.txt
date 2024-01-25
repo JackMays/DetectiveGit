@@ -1,0 +1,5 @@
+MuscDoor
+Ram
+Strength
+You ram the door as hard as you can and it comes flying off its hinges, it seems it was welded all the way around its perimeter to prevent entry.
+false

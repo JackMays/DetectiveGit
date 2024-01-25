@@ -1,0 +1,3 @@
+Timer
+When the timer reaches 0:00, the mechanisms leg collapses and squeezes the trigger on the rifle.
+Timed Mechanism
