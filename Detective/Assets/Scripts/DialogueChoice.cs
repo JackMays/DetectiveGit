@@ -2,12 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// Class for handling Dialogue choices by the player
+// what the button looks like, what item/move/clue they unlock and what muscle options they work with or make available
+// as well as how long the text sequence is
 public class DialogueChoice {
 
 	string buttonText;
 
 	string eventTextDisplay;
 
+	// a dialogue choice holds onto its potential direct follow ups
 	List<DialogueChoice> followUpDialogues = new List<DialogueChoice>();
 	List<string> unlockItems = new List<string>();
 	List<string> unlockMoves = new List<string>();
@@ -36,6 +40,7 @@ public class DialogueChoice {
 
 		choiceNo = int.Parse(choiceFile.text);
 
+		// choiceNo decides if there are any follow up dialogue to select
 		if (choiceNo > 0)
 		{
 			canFollowUp = true;
@@ -44,7 +49,11 @@ public class DialogueChoice {
 		{
 			canFollowUp = false;
 		}
-
+		// If there is follow up, find the keyword for the NPC
+		// Which has its own choice file that may decide any more follow ups
+		// Button text for its button appearance
+		// An event which is what is displayed when the button is pushed, often the NPCs reaction and/or speech
+		// And any item/move/clue/muscle unlocks as appropriate
 		if (canFollowUp)
 		{
 			for (int i = 1; i <= choiceNo; ++i)

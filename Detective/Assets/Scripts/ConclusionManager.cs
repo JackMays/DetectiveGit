@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
+// Manager for handling the ending sequence of levels
+// Loading the true murderer
+// The text for their successful accusation
+// Any muscle keywords that will reveal specific actions in a fight scene
+// And finally the ending text
 public class ConclusionManager : MonoBehaviour {
 
 	List<string> muscleKeywords = new List<string>();
@@ -23,7 +28,7 @@ public class ConclusionManager : MonoBehaviour {
 	void Update () {
 	
 	}
-
+	// Load everything from their respectiuve text files
 	public void InitialiseConclusion(string filePath)
 	{
 		TextAsset murdererFile = Resources.Load(filePath + "Murderer") as TextAsset;

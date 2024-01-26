@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
+// skeleton for what defines an Item
+// from its examine/pick up description, if it has any use requirement between two items to be unlocked, any potential move or clue unlocks
 public class Item {
 
 	List<string> useReqs = new List<string>();

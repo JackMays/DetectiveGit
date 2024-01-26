@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Class for buttons in dialogue sequences with attached dialogue choices
+// passing the dialogue choice to GameManager to handle and then display with Typewriter Effect
 public class DialogueManager : MonoBehaviour {
 
 	DialogueChoice assignedDialogue;
@@ -22,7 +24,8 @@ public class DialogueManager : MonoBehaviour {
 		assignedDialogue = dialogue;
 		managerRef = manager;
 	}
-
+	//passing dialogue to GameManager to handle
+	//Function for Button press
 	public void PassDialogueChoice()
 	{
 		managerRef.ExecuteDialogueTarget(assignedDialogue);

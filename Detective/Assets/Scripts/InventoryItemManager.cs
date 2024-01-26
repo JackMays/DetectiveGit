@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+// Class for handling buttons to selecting items in Inventory to follow up with an Interact action from Inventory
 public class InventoryItemManager : ObjectManager {
 
 	// Use this for initialization
@@ -13,6 +14,7 @@ public class InventoryItemManager : ObjectManager {
 	
 	}
 
+	// Function for Button press and passing first item selected
 	public void PassInventoryTarget()
 	{
 		managerRef.ExecuteInventoryTarget(assignedObjectID);

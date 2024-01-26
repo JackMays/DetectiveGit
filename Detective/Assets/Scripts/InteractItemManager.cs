@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+// Class for handling buttons which are items to be selected in the Interact Action
 public class InteractItemManager : ObjectManager {
 
 
@@ -15,6 +16,7 @@ public class InteractItemManager : ObjectManager {
 	
 	}
 
+	// function for Button Press to pass the target selected
 	public void PassInteractTarget()
 	{
 		// call back to gamemanager to persistantly hold selected item target

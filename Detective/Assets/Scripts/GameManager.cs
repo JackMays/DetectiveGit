@@ -135,6 +135,9 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		// Update logic for handling state changes
+		// between mind and muscle modes; Mind = true and Muscle = false
+		// handling main event textbox changes, transitions and updates and typewriter effect changes
 		if (!SceneManager.GetActiveScene().name.Contains("Deduction"))
 		{
 			// Mind
@@ -170,6 +173,7 @@ public class GameManager : MonoBehaviour {
 			{
 				if (eventTypewriter.gameObject.activeSelf && eventTypewriter.IsTypewriterComplete())
 				{
+					// Toggling UI change
 					if (isMuscleEnd)
 					{
 						SetMindOrMuscle(true);
@@ -196,6 +200,8 @@ public class GameManager : MonoBehaviour {
 		}
 		else
 		{
+			// Monitoring text chains in conclusion and ending events
+			// And/or mind-muscle changes
 			if (eventTypewriter.HasTypingChanged())
 			{
 				if (eventTypewriter.IsTypewriterComplete())
@@ -214,7 +220,7 @@ public class GameManager : MonoBehaviour {
 						muscleButton.gameObject.SetActive(true);
 						isStoredMuscleToggle = false;
 					}
-
+					// If muscle sequence is due to be over (such as due to successful muscle option) return to Mind
 					if (isMuscleEnd)
 					{
 						SetMindOrMuscle(true);
@@ -258,7 +264,7 @@ public class GameManager : MonoBehaviour {
 	void ToggleInvestigationModeUI (bool toggle)
 	{
 		// Sub buttons as part of mind mode need to follow toggle rules
-		// whereas vice versa, mindbutton has toi follow toggle rules aa it is active in Muscle
+		// whereas vice versa, mindbutton has to follow toggle rules as it is active in Muscle
 		if (isMindOrMuscle)
 		{
 			if (!isIntroChain && !isExamineChain && !isDialogueChain)
@@ -332,7 +338,8 @@ public class GameManager : MonoBehaviour {
 			muscleButton.gameObject.SetActive(false);
 		}
 	}
-
+	// Empty buttons are for when the player has no items/clues/moves etc
+	// Loads a greyed out button with appropriate button text to describe they dont have anything
 	void LoadEmptyButton(string buttonText)
 	{
 		GameObject subButton = Instantiate(Resources.Load("Prefabs/DummyDuplicateButton")) as GameObject;
@@ -346,6 +353,8 @@ public class GameManager : MonoBehaviour {
 		ResizePanel(subButton.GetComponent<LayoutElement>().minWidth);
 	}
 
+	// checks if all evidence is gathered; consisting of items and clues
+	// If so, loads suspects and presents trransition to Deduction phase Scene
 	void LoadDeduction()
 	{
 		bool hasAllEvidence = true;
@@ -409,6 +418,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	// Type event text with muscle option wipe to ensure list is clear
 	public void TypeEventTextWithWipe(string text)
 	{
 		if (activeMuscleOptions.Count > 0)
@@ -531,13 +541,15 @@ public class GameManager : MonoBehaviour {
 		transitionButton.gameObject.SetActive(false);
 	}
 
+	// Loading Panel Buttons based on context and Scene state
 	public void LoadSubButtons (int type)
 	{
 		GameObject subButton = null;
 
 		PrepareScrollRect();
 
-		if (type == 1)
+        // // Instantiate and assign button text to Item buttons respresenting those in the inventory
+        if (type == 1)
 		{
 			// if there isnt any items load an empty
 			// if there is check if they are not all inactive or picked up
@@ -584,7 +596,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		
-		// Instantiate and assign text to the button based on NPC in scene
+		// Instantiate and assign text to NPC buttons based on NPCs in the Scene
 		else if (type == 2)
 		{
 			if (sceneContent.GetNPCCountInScene() == 0)
@@ -610,7 +622,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-		// Instantiate Item buttons respresenting those in the scene
+		// Instantiate and assign item text to Item buttons respresenting those in the inventory
 		else if (type == 3)
 		{
 			if (inventory.Count == 0)
@@ -636,7 +648,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-		// Instantiate Move Location (load scene) buttons
+		// Instantiate and assign button text to Move Location (load scene) buttons for actve scene/location
 		else if (type == 4)
 		{
 			if (sceneContent.GetMoveCountInLocation() == 0)
@@ -683,7 +695,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-		// Instantiate Interact Item Actions
+		// Instantiate and assign button text for Interact Item Actions
 		else if (type == 5)
 		{
 			for (int i = 0; i < subInteractButtons.Count; ++i)
@@ -704,8 +716,8 @@ public class GameManager : MonoBehaviour {
 
 			TypeEventTextWithWipe(sceneContent.GetItemByID(primaryEntityTarget).GetInteractText());
 		}
-		// Instantiate Inventory Item Actions
-		else if (type == 6)
+        // Instantiate and assign button text for Inventory Item Actions
+        else if (type == 6)
 		{
 			for (int i = 0; i < subInventoryButtons.Count; ++i)
 			{
@@ -723,11 +735,11 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 			
-			
+			// The event box displays the description of the first/rpimary item target while the player selects an Interact action.
 			TypeEventTextWithWipe(sceneContent.GetItemByID(primaryEntityTarget).GetInteractText());
 		}
-		// instantiate buttons for deciding whether Use will terget inventory or items in the scene
-		else if (type == 7)
+        // instantiate buttons and assign button text for deciding whether Use will target inventory or items in the scene
+        else if (type == 7)
 		{
 			for (int i = 0; i < subUseTargetButtons.Count; ++i)
 			{
@@ -746,8 +758,8 @@ public class GameManager : MonoBehaviour {
 			}
 
 		}
-		// instantiate buttons for target items in the scene for the Use Button
-		else if (type == 8)
+        // instantiate buttons and assign button text for target items in the scene for the Use Button
+        else if (type == 8)
 		{
 			for (int i = 0; i < sceneContent.GetItemCountInLocation(); ++i)
 			{
@@ -770,8 +782,8 @@ public class GameManager : MonoBehaviour {
 			}
 			
 		}
-		// Instantiate buttons for target items in the inventory with the Use Button
-		else if (type == 9)
+        // Instantiate buttons and assign button text for target items in the inventory with the Use Button
+        else if (type == 9)
 		{
 			for (int i = 0; i < inventory.Count; ++i)
 			{
@@ -796,8 +808,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 
-		// Initial dialogue choices for targeted NPC
-		else if (type == 10)
+        // Initial dialogue choices and assign button text for targeted NPC
+        else if (type == 10)
 		{
 			for (int i = 0; i < sceneContent.GetNPC(primaryEntityTarget).GetDialogueCount(); ++i)
 			{
@@ -816,8 +828,8 @@ public class GameManager : MonoBehaviour {
 
 			}
 		}
-		// Selecting to see Clue Inventory or Item Inventory
-		else if (type == 11)
+        // Selecting to see Clue Inventory or Item Inventory and assign button text 
+        else if (type == 11)
 		{
 			for (int i = 0; i < subInventTypeButtons.Count; ++i)
 			{
@@ -917,6 +929,7 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
+		// Instantiating and Assigning Button text for NPC Suspects in Deduction phase
 		else if (type == 15)
 		{
 			if (suspects.Count == 0)
@@ -944,7 +957,8 @@ public class GameManager : MonoBehaviour {
 				}
 			}
 		}
-		else if (type == 16)
+        // Instantiating and Assigning Button text for the final Accusation in Deduction phase
+        else if (type == 16)
 		{
 			for (int i = 0; i < suspects.Count; ++i)
 			{
@@ -971,7 +985,7 @@ public class GameManager : MonoBehaviour {
 		isSubButtonsActive = true;
 	}
 
-	// Overload for using a dialogue instance instead of an int ID
+	// Overload for using a dialogueChoice instance instead of an int ID
 	public void LoadSubButtons(DialogueChoice dialogue)
 	{
 		GameObject subButton = null;
@@ -1052,8 +1066,10 @@ public class GameManager : MonoBehaviour {
 		continueChainButton.gameObject.SetActive(toggle);
 	}
 
+	// continuing text chain if there is still more chain count and thereby more files with text to insert into the event text box
 	public void ContinueTextChain()
 	{
+		// if statements checking for the chains in different contexts
 		if (isIntroChain)
 		{
 			TypeEventTextWithWipe(sceneContent.GetIntroChain(textChain));
@@ -1124,7 +1140,8 @@ public class GameManager : MonoBehaviour {
 		LoadSubButtons(5);
 	}
 
-	// Choosing a target in the scene after pressing inventory
+	// Choosing a primary target in the scene after pressing inventory
+	// Then loading the Inventory Interact Actions (Examine, Use etc)
 	public void ExecuteInventoryTarget(int itemID)
 	{
 		primaryEntityTarget = itemID;
@@ -1132,11 +1149,14 @@ public class GameManager : MonoBehaviour {
 		LoadSubButtons(6);
 	}
 
+	// Choosing an NPC to start talking to and begin Dialogue Intro
 	public void ExecuteTalkTarget(int npcID)
 	{
 		primaryEntityTarget = npcID;
 		TypeEventTextWithWipe(sceneContent.GetNPC(npcID).GetTalkIntro());
 
+		//setting muscle options if NPC has any muscle options at this time
+		
 		if (sceneContent.GetNPC(npcID).HasMuscle())
 		{
 			for (int i = 0; i < allMuscleOptions.Count; ++i)
@@ -1154,6 +1174,7 @@ public class GameManager : MonoBehaviour {
 		LoadSubButtons(10);
 	}
 
+	// choosing a Dislogue option while talking to an NPC
 	public void ExecuteDialogueTarget (DialogueChoice dialogue)
 	{
 		TypeEventTextWithWipe(dialogue.GetEventText());
@@ -1220,6 +1241,8 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+	//executing Use action between two items based on location context
+	//be it a item in scene or item in inventory interacting with another scene or inventory item
 	public void ExecuteUseTarget(int targetID)
 	{
 		secondaryEntityTarget = targetID;
@@ -1316,22 +1339,25 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	// differentiating in a use action where the second item to select needs to be loaded from
 	public void ExecuteUseLocation(int locationID)
 	{
 		secondaryEntityLocation = locationID;
 
-		// Scene
+		// Scene selected, load items in scene
 		if (locationID == 0)
 		{
 			LoadSubButtons(8);
 		}
-		// Inventory
+		// Inventory selected. load items in inventory
 		else if (locationID == 1)
 		{
 			LoadSubButtons(9);
 		}
 	}
 
+	// execute Interact Actions in Scene
+	// Examine, Pick Up
 	public void ExecuteInteractAction(int actionID)
 	{
 		// Examine
@@ -1357,12 +1383,14 @@ public class GameManager : MonoBehaviour {
 				isItemMuscle = true;
 			}
 
+			// Unlock Move locations if Examining possesses Unlocks
 			if (sceneContent.GetItemByID(primaryEntityTarget).HasExamineMoveUnlocks())
 			{
 				sceneContent.UnlockMoves(sceneContent.GetItemByID(primaryEntityTarget));
 			}
 
-			if (sceneContent.GetItemByID(primaryEntityTarget).HasExamineClueUnlocks())
+            // Unlock Clues if Examining possesses Unlocks
+            if (sceneContent.GetItemByID(primaryEntityTarget).HasExamineClueUnlocks())
 			{
 				bool hasClue = false;
 				
@@ -1383,7 +1411,7 @@ public class GameManager : MonoBehaviour {
 			}
 
 
-
+			// if there is more than one text file to display more than one text block
 			isExamineChain = sceneContent.GetItemByID(primaryEntityTarget).HasExamineChain();
 
 			WipePanelButtons();
@@ -1402,6 +1430,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	// Execute displaying items or clues
 	public void ExecuteClueItemAction(int actionID)
 	{
 		// Clues
@@ -1416,6 +1445,8 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	// Execute Inventory actions
+	// Examine, Use (different from pick up with Interact actions in scene)
 	public void ExecuteInventoryAction(int actionID)
 	{
 		// Examine
@@ -1438,13 +1469,13 @@ public class GameManager : MonoBehaviour {
 
 				isItemMuscle = true;
 			}
-
-			if (sceneContent.GetItemByID(primaryEntityTarget).HasExamineMoveUnlocks())
+            // Unlock Move locations if Examining possesses Unlocks
+            if (sceneContent.GetItemByID(primaryEntityTarget).HasExamineMoveUnlocks())
 			{
 				sceneContent.UnlockMoves(sceneContent.GetItemByID(primaryEntityTarget));
 			}
-
-			if (sceneContent.GetItemByID(primaryEntityTarget).HasExamineClueUnlocks())
+            // Unlock Clues if Examining possesses Unlocks
+            if (sceneContent.GetItemByID(primaryEntityTarget).HasExamineClueUnlocks())
 			{
 				bool hasClue = false;
 
@@ -1475,16 +1506,19 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	// display Clue in event text box
 	public void ExecuteClueDisplayAction(int clueID)
 	{
 		TypeEventTextWithWipe(clues[clueID].GetSelectText());
 	}
 
+	// display deduction in event text box
 	public void ExecuteDeductionDisplayAction(string deduction)
 	{
 		TypeEventTextWithWipe(deduction);
 	}
 
+	// display new scene intro in event text box when move action is used 
 	public void ExecuteMoveTransition()
 	{
 		WipePanelButtons();
@@ -1493,6 +1527,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+	// scroll through muscle options in muscle mode
 	public void ExecuteMuscleScroll(bool next)
 	{
 		if (next)
@@ -1521,6 +1556,7 @@ public class GameManager : MonoBehaviour {
 		muscleText.text = activeMuscleOptions[currentMuscleOption].GetOptionDisplay();
 	}
 
+	// executing an active muscle option when selected
 	public void ExecuteMuscleAction(string currentAction)
 	{
 		eventTypewriter.HideText(true);
@@ -1633,6 +1669,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	// Display ending text in event text box
 	public void ExecuteEnding()
 	{
 			TypeEventTextWithWipe(conclusion.GetEnding());
@@ -1642,7 +1679,9 @@ public class GameManager : MonoBehaviour {
 			endingButton.gameObject.SetActive(false);
 	}
 
-	public bool ExecuteAccusation(int suspID)
+    // Display Accusation text in event text boxa long with if it was successful
+    // and any appropriate muscle options such as fight scenes with main suspect
+    public bool ExecuteAccusation(int suspID)
 	{
 		if (conclusion.GetMurderer() == suspects[suspID].GetNameID())
 		{

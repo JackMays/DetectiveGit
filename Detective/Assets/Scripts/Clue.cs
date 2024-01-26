@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// The Skeleton of a clue and how they are stored
+// for combining into deductions and proceeding to the finale of cases
 public class Clue {
 
 	string clueID;

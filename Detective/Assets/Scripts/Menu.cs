@@ -13,7 +13,7 @@ public class Menu : MonoBehaviour {
 	void Update () {
 	
 	}
-
+	// loading the level from the Menu
 	public void LoadScene(int scene)
 	{
 		SceneManager.LoadScene(scene);

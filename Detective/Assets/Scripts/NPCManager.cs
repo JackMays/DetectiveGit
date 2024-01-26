@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Class for handling buttons when selecting NPCs to talk to
 public class NPCManager : ObjectManager {
 
 	// Use this for initialization
@@ -13,6 +14,7 @@ public class NPCManager : ObjectManager {
 	
 	}
 
+	// function for button press to pass NPC selected
 	public void PassTalkTarget()
 	{
 		managerRef.ExecuteTalkTarget(assignedObjectID);

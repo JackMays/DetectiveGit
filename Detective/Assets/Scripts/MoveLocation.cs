@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Skeleton for what defines a Move Location
+// from its unique ID, name and whether it is available and active to be travelled to
 public class MoveLocation {
 
 	string locationName;

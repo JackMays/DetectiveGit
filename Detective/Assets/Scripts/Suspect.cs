@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// a Skeleton for defining what a Suspect is, an NPC that makes it to the Deduction Phase
+// with their name and description for when they are selected
 public class Suspect {
 
 	string nameIdentifier = "";

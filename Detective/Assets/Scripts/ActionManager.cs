@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Parent class for any manager that handles actions
+// where the player presses a button and triggers an event such as Interacting with the scene
+// IDs for actions of different contexts are communicated to game manager through the reference
 public class ActionManager : MonoBehaviour {
 
 	protected int actionID = 0;

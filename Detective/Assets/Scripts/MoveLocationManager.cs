@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Class for handling Buttons that are selecxted by the player to move to another location
 public class MoveLocationManager : MonoBehaviour {
 
 	int assignedLocation = 0;
@@ -24,6 +25,7 @@ public class MoveLocationManager : MonoBehaviour {
 		managerRef = gRef;
 	}
 
+	// function for button press to execute scsne transition to new location
 	public void LoadAssignedLocation()
 	{
 		//Application.LoadLevel(assignedLocation);

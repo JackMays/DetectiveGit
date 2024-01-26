@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// class for handling buttons used to execute Interact Actions such as Examine
 public class InteractActionManager : ActionManager {
 
 	// Use this for initialization
@@ -14,7 +15,7 @@ public class InteractActionManager : ActionManager {
 	}
 
 
-
+	// function for button press
 	public void ExecuteInteractAction()
 	{
 		managerRef.ExecuteInteractAction (actionID);

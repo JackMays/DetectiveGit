@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
+// Class for managing the main button Muscle Mode for selecting physical actions against an object based on what muscle options it may or may not have
 public class PunchManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler {
 
 	GameManager managerRef;

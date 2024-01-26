@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// skeleton for what defines a Muscle Option
+// A often physical type of action like a punch or barging down a door
+// from its unique ID, option text for its button, success display string (with any follow up text chains) and whether it unlocks a move location or item
+// Like breaking a locked door allowing the player to go through it to a new location
 public class MuscleOption {
 
 	string keywordID = "";

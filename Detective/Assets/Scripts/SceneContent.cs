@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
+// Class for defining and tracking what is in a Location's scene
+// from its base into event box description
+// to physical entities and objects such as the Items, clues, Move Locations, NPCs available
+// to handle all manner of Interact, Unlocks and progress to the Deduction Phase
 public class SceneContent : MonoBehaviour {
 
 	//List<Item> itemsInLocation = new List<Item>();
@@ -87,7 +91,7 @@ public class SceneContent : MonoBehaviour {
 			masterMoveLocationList.Add (new MoveLocation(masterLocationNameList[j], j, travelBool));
 		}
 	}
-	// includes Items used in bboth In vestigation and Deduction
+	// includes Items used in both Investigation and Deduction
 	void InitialiseItemLists(string itemPath)
 	{
 		int totalItemIndex = 0;
@@ -113,11 +117,13 @@ public class SceneContent : MonoBehaviour {
 			itemsAcrossScene.Add (itemsInLocation);
 		}
 
+		// debug for test
 		/*itemsInScene.Add(new Item("Knife", txtSubFolder + itemSubFolder, 0));
 		itemsInScene.Add(new Item("Bottle", txtSubFolder + itemSubFolder, 1));*/
 
 		TextAsset useList = Resources.Load (itemPath + "Use List") as TextAsset;
-		// if there is list elements, add them, if nto just submit an empty list to avoid errors if its accessed 
+
+		// if there is list elements, add them, if not just submit an empty list to avoid errors if its accessed 
 		//i.e in a level where no use items needed
 		if (useList != null)
 		{
@@ -138,7 +144,7 @@ public class SceneContent : MonoBehaviour {
 		TextAsset deductionItemList = Resources.Load (deductPath + "Deduction Item List") as TextAsset;
 		TextAsset deductionClueList = Resources.Load (deductPath + "Deduction Clue List") as TextAsset;
 
-		// While thgere will always be a deduction list, this is used to error check
+		// While thgre will always be a deduction list, this is used to error check
 		if (deductionItemList != null)
 		{
 			string[] deductionItemReqArray = deductionItemList.text.Split('\n');
@@ -205,7 +211,7 @@ public class SceneContent : MonoBehaviour {
 			moveLocsAcrossScene.Add (availableMoveLocIDs);
 		}
 	}
-
+	// Get Location ID by its name string
 	int GetLocationIDByName(string location)
 	{
 		for (int i = 0; i < masterMoveLocationList.Count; ++i)
@@ -218,7 +224,7 @@ public class SceneContent : MonoBehaviour {
 
 		return 0;
 	}
-
+	// Set the current location, and load chain of intro texts to run through typewriter
 	public void SetCurrentLocation(int locID)
 	{
 		locationID = locID;
@@ -246,7 +252,7 @@ public class SceneContent : MonoBehaviour {
 		introChainList.Clear();
 	}
 
-
+	// Removing items from list, often when they are picked up
 	public void RemoveItemByID(int itemID)
 	{
 		for (int i = 0; i < itemsAcrossScene[locationID].Count; ++i)
@@ -259,7 +265,7 @@ public class SceneContent : MonoBehaviour {
 			}
 		}
 	}
-
+	// If a dialogue has an item to unlock when played/revealed, unlock it
 	public void UnlockItems(DialogueChoice dialogue)
 	{
 		for (int i = 0; i < itemsAcrossScene[locationID].Count; ++i)
@@ -271,7 +277,7 @@ public class SceneContent : MonoBehaviour {
 			}
 		}
 	}
-
+	// Overload of unlock using item name string often used for muscle actions
 	public void UnlockItems(string item)
 	{
 		for (int i = 0; i < itemsAcrossScene[locationID].Count; ++i)
@@ -283,7 +289,7 @@ public class SceneContent : MonoBehaviour {
 			}
 		}
 	}
-
+	// If a dialogue opens a travel location, Unlock it
 	public void UnlockMoves(DialogueChoice dialogue)
 	{
 		for (int i = 0; i < moveLocsAcrossScene[locationID].Count; ++i)
@@ -297,7 +303,7 @@ public class SceneContent : MonoBehaviour {
 			}
 		}
 	}
-
+	// Unlock Moves Overload for when examining an item would trigger a move to open
 	public void UnlockMoves(Item item)
 	{
 		for (int i = 0; i < moveLocsAcrossScene[locationID].Count; ++i)
@@ -311,7 +317,7 @@ public class SceneContent : MonoBehaviour {
 			}
 		}
 	}
-
+	// Overload for Unlockijng Moves directly with their name
 	public void UnlockMoves(string move)
 	{
 		for (int i = 0; i < moveLocsAcrossScene[locationID].Count; ++i)
@@ -325,7 +331,7 @@ public class SceneContent : MonoBehaviour {
 			}
 		}
 	}
-
+	// Unlocking Item when the use command successfully executes between two items
 	public void UnlockUseItem(Item useItem)
 	{
 		itemsAcrossScene[locationID].Add(useItem);

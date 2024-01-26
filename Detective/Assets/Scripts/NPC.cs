@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+//Skeleton for definine an NPC
+// From their name, to what displays when you talk to them, any follow ups to that initial dialogue and any physical options for muscle mode
 public class NPC {
 
 	string npcName;

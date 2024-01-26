@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Class for handling buttons in Deduction Scene with deduced suspects
+// Deduced suspects only have a descriptor for GameManager to display in the deduction phase where their use appears when the player accuses them after deduction phase
 public class DeductSuspDisplayManager : MonoBehaviour {
 
 	GameManager gameManagerRef;
@@ -23,7 +25,8 @@ public class DeductSuspDisplayManager : MonoBehaviour {
 	{
 		textToDisplay = text;
 	}
-
+	// Giving GameManager suspect text to display
+	// Function for Button Press
 	public void DisplayText()
 	{
 		gameManagerRef.TypeEventTextWithWipe(textToDisplay);

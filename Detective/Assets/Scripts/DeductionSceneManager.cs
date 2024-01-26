@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
+// Class for setting the Deduction Play space / scene
+// Where the player uses the UI in front of them to combine items and clues into deductions
 public class DeductionSceneManager : MonoBehaviour {
 
 	public Button clueButton;
@@ -67,6 +69,7 @@ public class DeductionSceneManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		// if conclusion is playing and Ui isnt hidden, hide UI for the chain to play out
 		if (gameManagerRef.HasConclusionChainActive() && !isChainHideOnce)
 		{
 			ChainHide();
@@ -74,8 +77,9 @@ public class DeductionSceneManager : MonoBehaviour {
 		}
 		else if (!gameManagerRef.HasConclusionChainActive() && isChainHideOnce)
 		{
-			// If theres no chain but the Ui has been prepped for a chain before
-			// One has ended and its time for the finale sequence
+			// If theres no chain but the Ui has been hidden for a chain before
+			// A conclusion chain has ended and its time for the finale sequence
+			// make sure it has been appropriately triggered
 			StartFinalMuscle();
 			isChainHideOnce = false;
 		}
@@ -86,7 +90,9 @@ public class DeductionSceneManager : MonoBehaviour {
 		firstObject = "";
 		secondObject = "";
 	}
-
+	// checking deduction and returning the proper result text
+	// then giving game manager the deduction text or appropriate failure text with ExecuteDeductionDisplayAction() to run through typewriter effect
+	// Object strings are reset to ensure they are ready for the next item/clue deduction
 	void PassDeduction()
 	{
 		foreach (Deduction deduction in deductionList)
@@ -136,7 +142,7 @@ public class DeductionSceneManager : MonoBehaviour {
 		gameManagerRef.ExecuteDeductionDisplayAction("Those do not go together.");
 		resetObjects();
 	}
-
+	// hide all Ui elements during a typewriter text chain
 	void ChainHide()
 	{
 		itemButton.gameObject.SetActive(false);
@@ -146,7 +152,9 @@ public class DeductionSceneManager : MonoBehaviour {
 		conclusionButton.gameObject.SetActive(false);
 		reviewButton.gameObject.SetActive(false);
 	}
-
+	//Storing objects and outputting appropriate response
+	// if first object, simply output the examine text to shoe input feedback
+	// If second object, we have both objects for a deduction check
 	public void SaveObjectSelection(string selection, string examine)
 	{
 		if (firstObject == "")
