@@ -25,7 +25,10 @@ public class GameManager : MonoBehaviour {
 	public ScrollRect subButtonScroll;
 	public GameObject subButtonPanel;
 	public Typewriter eventTypewriter;
+
+
 	public Text muscleText;
+	public Text muscleTutorialText;
 
 	public Button muscleButton;
 	public Button mindButton;
@@ -87,6 +90,8 @@ public class GameManager : MonoBehaviour {
 
 		muscleText.text = "";
 		muscleText.gameObject.SetActive(false);
+		muscleTutorialText.gameObject.SetActive(false);
+
 		prevMuscleScroll.gameObject.SetActive(false);
 		nextMuscleScroll.gameObject.SetActive (false);
 		subButtonScroll.gameObject.SetActive(false);
@@ -488,6 +493,7 @@ public class GameManager : MonoBehaviour {
 		if (!isMorM)
 		{
 			muscleText.gameObject.SetActive(true);
+			muscleTutorialText.gameObject.SetActive(true);
 
 			if (activeMuscleOptions.Count != 0)
 			{
@@ -516,6 +522,7 @@ public class GameManager : MonoBehaviour {
 			muscleText.text = "";
 			currentMuscleOption = 0;
 			muscleText.gameObject.SetActive(false);
+			muscleTutorialText.gameObject.SetActive(false);
 		}
 
 		isMindOrMuscle = isMorM;
